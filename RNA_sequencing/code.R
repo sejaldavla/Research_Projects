@@ -147,10 +147,6 @@ library(ComplexHeatmap)
 #Find markers
 FM <- FindAllMarkers(Female1vnc, test.use = 'negbinom', only.pos = TRUE)
 
-markers.use=subset(FM,avg_diff>0&power>0.8)$gene
-
-
-
 #Find markers of individual clusters with different criteria
 cluster1markers <- FindMarkers(Female1vnc, ident.1 = 1, min.pct = 0.25)
 cluster1markers
@@ -177,34 +173,7 @@ FM <- FM %>%
   filter(avg_logFC>0.5) %>% 
   filter(p_val_adj<0.05)
 
-FMFileName <- paste0("AllCluster_Markers_",AnalysisName,".csv")
-write.csv(FM, FM.csv)
-
-
 #Save as CSV
 write.csv(FM,'ClusterMarkers.csv')
-
-
-# Cutsoff
-NumberOfCCAs <- 45
-nGeneLowCutOff <- 200
-nGeneHighCutOff <- Inf
-nUMILowCutOff <- 1200
-nUMIHighCutOff <- 10000
-ClusterResolution <- 12  
-MitoLowCutOff <- -Inf
-MitoHighCutOff <- 0.15
-Perplex <- 30
-Theta <- 0.05
-
-AnalysisName <- paste0(
-  "noDF_mt(0-",MitoHighCutOff,
-  ")_G(",nGeneLowCutOff,"-",nGeneHighCutOff,
-  ")_U(",nUMILowCutOff,"-",nUMIHighCutOff,
-  ")_CCA(",NumberOfCCAs,
-  ")_res(",ClusterResolution,
-  ")_Perplex(",Perplex,
-  ")_theta(",Theta
-)
 
 
